@@ -7,21 +7,22 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/lucavallin/mawu/pkg/tomorrowio"
 	"github.com/spf13/cobra"
 )
 
 // forecastCmd represents the forecast command
 var forecastCmd = &cobra.Command{
 	Use:   "forecast",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Get the forecast for a city",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("forecast called")
+		coordinates := args[0]
+
+		tio := tomorrowio.NewClient(tomorrowioApiKey)
+		forecast, err := tio.GetHourlyForecast(coordinates)
+
+		fmt.Println(forecast, err)
 	},
 }
 

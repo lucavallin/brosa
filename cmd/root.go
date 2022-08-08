@@ -27,6 +27,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var tomorrowioApiKey = os.Getenv("TOMORROWIO_API_KEY")
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "mawu",
