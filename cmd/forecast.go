@@ -1,12 +1,7 @@
-/*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/mawu/pkg/tomorrowio"
 	"github.com/spf13/cobra"
 )
@@ -22,20 +17,11 @@ var forecastCmd = &cobra.Command{
 		tio := tomorrowio.NewClient(tomorrowioApiKey)
 		forecast, err := tio.GetHourlyForecast(coordinates)
 
-		fmt.Println(forecast, err)
+		spew.Dump(forecast, err)
 	},
 }
 
+// Set flags and configuration settings.
 func init() {
 	rootCmd.AddCommand(forecastCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// forecastCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// forecastCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

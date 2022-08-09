@@ -15,17 +15,24 @@ func NewClient(apiKey string) *Tomorrowio {
 			SetHeader("Accept", "application/json").
 			SetHeader("Accept-Encoding", "gzip").
 			SetQueryParam("apikey", apiKey).
+			SetQueryParam("units", "metric").
 			R(),
 	}
 }
 
-func (o *Tomorrowio) GetHourlyForecast(location string) (*resty.Response, error) {
-	return o.client.
+func (o *Tomorrowio) GetHourlyForecast(location string) (*Forecast, error) {
+	res, err := o.client.
 		SetQueryParam("location", location).
-		SetQueryParam("fields", "temperature").
-		SetQueryParam("units", "metric").
+		SetQueryParam("fields", "temperature,humidity,visibility,cloudCover,cloudBase,cloudCeiling").
 		SetQueryParam("timesteps", "1h").
 		SetQueryParam("startTime", "now").
 		SetQueryParam("endTime", "nowPlus6h").
+		SetResult(&Forecast{}).
 		Get("timelines")
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res.Result().(*Forecast), nil
 }

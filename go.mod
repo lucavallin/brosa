@@ -3,6 +3,7 @@ module github.com/lucavallin/mawu
 go 1.18
 
 require (
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/spf13/cobra v1.5.0 // indirect
