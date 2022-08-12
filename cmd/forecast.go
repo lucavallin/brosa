@@ -1,7 +1,9 @@
 package cmd
 
 import (
-	"github.com/davecgh/go-spew/spew"
+	"fmt"
+	"time"
+
 	"github.com/lucavallin/mawu/pkg/tomorrowio"
 	"github.com/spf13/cobra"
 )
@@ -17,7 +19,25 @@ var forecastCmd = &cobra.Command{
 		tio := tomorrowio.NewClient(tomorrowioApiKey)
 		forecast, err := tio.GetHourlyForecast(coordinates)
 
-		spew.Dump(forecast, err)
+		if err != nil {
+			panic(err)
+		}
+
+		for _, timeline := range forecast.Data.Timelines {
+			for _, interval := range timeline.Intervals {
+				date, _ := time.Parse(time.RFC3339, interval.StartTime)
+				fmt.Printf(
+					"%s: CloudBase=%.2f, CloudCeiling=%.2f, CloudCover=%.2f, Humidity=%.2f, Temperature=%.2f, Visibility=%.2f\n",
+					date.Format("2006-01-02 15:04"),
+					interval.Values.CloudBase,
+					interval.Values.CloudCeiling,
+					interval.Values.CloudCover,
+					interval.Values.Humidity,
+					interval.Values.Temperature,
+					interval.Values.Visibility,
+				)
+			}
+		}
 	},
 }
 

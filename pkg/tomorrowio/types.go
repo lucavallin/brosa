@@ -1,7 +1,7 @@
 package tomorrowio
 
 type Forecast struct {
-	Timelines []Timeline `json:"timelines"`
+	Data Data `json:"data"`
 }
 
 type Data struct {
@@ -21,10 +21,10 @@ type Interval struct {
 }
 
 type Values struct {
-	CloudBase    interface{} `json:"cloudBase"`
-	CloudCeiling interface{} `json:"cloudCeiling"`
-	CloudCover   float64     `json:"cloudCover"`
-	Humidity     float64     `json:"humidity"`
-	Temperature  float64     `json:"temperature"`
-	Visibility   int64       `json:"visibility"`
+	CloudBase    float64 `json:"cloudBase"`
+	CloudCeiling float64 `json:"cloudCeiling"`
+	CloudCover   float64 `json:"cloudCover"`
+	Humidity     float64 `json:"humidity"`
+	Temperature  float64 `json:"temperature"`
+	Visibility   float64 `json:"visibility"`
 }

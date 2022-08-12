@@ -26,7 +26,7 @@ func (o *Tomorrowio) GetHourlyForecast(location string) (*Forecast, error) {
 		SetQueryParam("fields", "temperature,humidity,visibility,cloudCover,cloudBase,cloudCeiling").
 		SetQueryParam("timesteps", "1h").
 		SetQueryParam("startTime", "now").
-		SetQueryParam("endTime", "nowPlus6h").
+		SetQueryParam("endTime", "nowPlus1h").
 		SetResult(&Forecast{}).
 		Get("timelines")
 
