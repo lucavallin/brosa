@@ -26,6 +26,6 @@ func Execute() {
 
 // Set flags and configuration settings.
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&tomorrowioApiKey, "apiKey", "k", "", "Tomorrow.io API Key (required)")
-	rootCmd.MarkPersistentFlagRequired("apiKey")
+	rootCmd.PersistentFlags().StringVarP(&tomorrowioApiKey, "tomorrowio-key", "k", "", "Tomorrow.io API Key (required)")
+	rootCmd.MarkPersistentFlagRequired("tomorrowio-key")
 }

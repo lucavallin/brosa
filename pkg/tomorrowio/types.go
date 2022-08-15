@@ -21,10 +21,8 @@ type Interval struct {
 }
 
 type Values struct {
-	CloudBase    float64 `json:"cloudBase"`
-	CloudCeiling float64 `json:"cloudCeiling"`
-	CloudCover   float64 `json:"cloudCover"`
-	Humidity     float64 `json:"humidity"`
-	Temperature  float64 `json:"temperature"`
-	Visibility   float64 `json:"visibility"`
+	CloudCover  float64 `json:"cloudCover"`
+	Humidity    float64 `json:"humidity"`
+	Temperature float64 `json:"temperature"`
+	Visibility  float64 `json:"visibility"`
 }

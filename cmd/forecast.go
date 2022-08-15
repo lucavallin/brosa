@@ -9,31 +9,32 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// endTime is the end time for the forecast.
+var endTime string
+
 // forecastCmd represents the forecast command
 var forecastCmd = &cobra.Command{
 	Use:   "forecast",
-	Short: "Get the forecast for a city",
+	Short: "Get the forecast for a set of coordinates",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		coordinates := args[0]
 
 		tio := tomorrowio.NewClient(tomorrowioApiKey)
-		forecast, err := tio.GetHourlyForecast(coordinates)
+		forecast, err := tio.GetForecast(coordinates, endTime)
 
 		if err != nil {
 			panic(err)
 		}
 
 		var table = pterm.TableData{
-			{"Date", "Cloud Base (%)", "Cloud Ceiling (%)", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)"},
+			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)"},
 		}
 		for _, timeline := range forecast.Data.Timelines {
 			for _, interval := range timeline.Intervals {
 				date, _ := time.Parse(time.RFC3339, interval.StartTime)
 				table = append(table, []string{
 					date.Format("2006-01-02 15:04"),
-					fmt.Sprintf("%2.f", interval.Values.CloudBase),
-					fmt.Sprintf("%2.f", interval.Values.CloudCeiling),
 					fmt.Sprintf("%2.f", interval.Values.CloudCover),
 					fmt.Sprintf("%2.f", interval.Values.Humidity),
 					fmt.Sprintf("%2.f", interval.Values.Temperature),
@@ -42,11 +43,14 @@ var forecastCmd = &cobra.Command{
 			}
 		}
 
-		pterm.DefaultTable.WithHasHeader().WithData(table).Render()
+		fmt.Println()
+		pterm.DefaultTable.WithHasHeader().WithData(table).WithRightAlignment().Render()
 	},
 }
 
 // Set flags and configuration settings.
 func init() {
+	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "nowPlus24h", "End time for the forecast")
+
 	rootCmd.AddCommand(forecastCmd)
 }

@@ -20,13 +20,13 @@ func NewClient(apiKey string) *Tomorrowio {
 	}
 }
 
-func (o *Tomorrowio) GetHourlyForecast(location string) (*Forecast, error) {
+func (o *Tomorrowio) GetForecast(location string, endTime string) (*Forecast, error) {
 	res, err := o.client.
 		SetQueryParam("location", location).
-		SetQueryParam("fields", "temperature,humidity,visibility,cloudCover,cloudBase,cloudCeiling").
+		SetQueryParam("fields", "temperature,humidity,visibility,cloudCover").
 		SetQueryParam("timesteps", "1h").
 		SetQueryParam("startTime", "now").
-		SetQueryParam("endTime", "nowPlus24h").
+		SetQueryParam("endTime", endTime).
 		SetResult(&Forecast{}).
 		Get("timelines")
 
