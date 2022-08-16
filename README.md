@@ -1,7 +1,7 @@
 # mau
 Mighty Astronomical Utility. A CLI tool written in Golang to retrieve information useful for astronomy.
 
-![](docs/mawu.png)
+![](docs/mau.png)
 
 
 ## Usage

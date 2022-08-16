@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/lucavallin/mawu/pkg/geo"
-	"github.com/lucavallin/mawu/pkg/tomorrowio"
+	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/mau/pkg/tomorrowio"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )

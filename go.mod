@@ -1,6 +1,6 @@
-module github.com/lucavallin/mawu
+module github.com/lucavallin/mau
 
-go 1.18
+go 1.19
 
 require (
 	atomicgo.dev/cursor v0.1.1 // indirect
