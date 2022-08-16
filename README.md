@@ -1,5 +1,5 @@
-# mawu
-Mighty Astronomical Weather Utility. A CLI tool written in Golang that uses Tomorrow.io to check when the weather is good for stargazing.
+# mau
+Mighty Astronomical Utility. A CLI tool written in Golang to retrieve information useful for astronomy.
 
 ![](docs/mawu.png)
 
@@ -11,12 +11,12 @@ To get the forecast for a location, run the following:
 
 ```bash
 go build
-./mawu forecast <COORDINATES> --tomorrowio-key=<YOUR_TOMORROW_IO_API_KEY> --end-time=nowPlus24h
+./mau forecast <COORDINATES> --tomorrowio-key=<YOUR_TOMORROW_IO_API_KEY> --end-time=nowPlus24h
 ```
 
 ## TODOs
 - Should a caching layer be added to avoid hitting the API too often (limit is 500r/m) ? Or should there be multiple weather data providers to loop through in case one hits the limit?
-- Should I make a Rust (`mawu-rs`) version of this just for learning?
+- Should I make a Rust (`mau-rs`) version of this just for learning?
 - remove use of resty and use native Go HTTP client instead
 - Add forecast for a specific time, e.g. "tomorrow"
 - Add more data layers to the forecast
