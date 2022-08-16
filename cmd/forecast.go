@@ -40,6 +40,7 @@ var forecastCmd = &cobra.Command{
 		for _, timeline := range forecast.Data.Timelines {
 			for _, interval := range timeline.Intervals {
 				date, _ := time.Parse(time.RFC3339, interval.StartTime)
+				// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
 				table = append(table, []string{
 					date.Format("2006-01-02 15:04"),
 					fmt.Sprintf("%2.f", interval.Values.CloudCover),
@@ -50,13 +51,13 @@ var forecastCmd = &cobra.Command{
 			}
 		}
 
-		fmt.Println()
-		pterm.DefaultTable.WithHasHeader().WithData(table).WithRightAlignment().Render()
+		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).WithRightAlignment().Render()
 	},
 }
 
 // Set flags and configuration settings.
 func init() {
+	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
 	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "nowPlus24h", "End time for the forecast")
 
 	rootCmd.AddCommand(forecastCmd)

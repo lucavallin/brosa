@@ -18,3 +18,8 @@ go build
 - Should a caching layer be added to avoid hitting the API too often (limit is 500r/m) ? Or should there be multiple weather data providers to loop through in case one hits the limit?
 - Should I make a Rust (`mawu-rs`) version of this just for learning?
 - remove use of resty and use native Go HTTP client instead
+- Add forecast for a specific time, e.g. "tomorrow"
+- Add more data layers to the forecast
+- Add algorithm to generate hour quality-score based on weather data
+- Add tests
+- Coordinates are a pain. It would be nice to add a geo-coder to convert a location to coordinates.
