@@ -41,11 +41,11 @@ func NewCoordinatesFromString(commaSeparatedInput string) (*Coordinates, error) 
 
 func validateLatitudeLongitude(latitude, longitude float64) error {
 	if latitude < -90 || latitude > 90 {
-		return fmt.Errorf("invalid latitude: %f", latitude)
+		return fmt.Errorf("invalid latitude: %f is not between -90 and 90", latitude)
 	}
 
 	if longitude < -180 || longitude > 180 {
-		return fmt.Errorf("invalid longitude: %f", longitude)
+		return fmt.Errorf("invalid longitude: %f is not between -180 and 180", longitude)
 	}
 
 	return nil

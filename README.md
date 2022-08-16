@@ -17,3 +17,4 @@ go build
 ## TODOs
 - Should a caching layer be added to avoid hitting the API too often (limit is 500r/m) ? Or should there be multiple weather data providers to loop through in case one hits the limit?
 - Should I make a Rust (`mawu-rs`) version of this just for learning?
+- remove use of resty and use native Go HTTP client instead
