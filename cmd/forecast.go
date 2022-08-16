@@ -18,6 +18,7 @@ var forecastCmd = &cobra.Command{
 	Short: "Get the forecast for a set of coordinates",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		// todo: add coordinates validation
 		coordinates := args[0]
 
 		tio := tomorrowio.NewClient(tomorrowioApiKey)

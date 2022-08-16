@@ -15,8 +15,5 @@ go build
 ```
 
 ## TODOs
-- Are there better ways to use Cobra and Viper?
-- Where should the API key be stored? Setting it in the environment is annoying.
 - Should a caching layer be added to avoid hitting the API too often (limit is 500r/m) ? Or should there be multiple weather data providers to loop through in case one hits the limit?
 - Should I make a Rust (`mawu-rs`) version of this just for learning?
-- Add validation for location coordinates
