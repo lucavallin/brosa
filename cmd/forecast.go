@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"time"
 
+	"github.com/lucavallin/mawu/pkg/geo"
 	"github.com/lucavallin/mawu/pkg/tomorrowio"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
@@ -18,14 +20,18 @@ var forecastCmd = &cobra.Command{
 	Short: "Get the forecast for a set of coordinates",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		// todo: add coordinates validation
-		coordinates := args[0]
+		coordinates, err := geo.NewCoordinatesFromString(args[0])
+		if err != nil {
+			pterm.Error.Println(err)
+			os.Exit(1)
+		}
 
 		tio := tomorrowio.NewClient(tomorrowioApiKey)
-		forecast, err := tio.GetForecast(coordinates, endTime)
+		forecast, err := tio.GetForecast(coordinates.Latitude, coordinates.Longitude, endTime)
 
 		if err != nil {
-			panic(err)
+			pterm.Error.Println(err)
+			os.Exit(1)
 		}
 
 		var table = pterm.TableData{

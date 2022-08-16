@@ -1,6 +1,8 @@
 package tomorrowio
 
 import (
+	"fmt"
+
 	"github.com/go-resty/resty/v2"
 )
 
@@ -20,9 +22,9 @@ func NewClient(apiKey string) *Tomorrowio {
 	}
 }
 
-func (o *Tomorrowio) GetForecast(location string, endTime string) (*Forecast, error) {
+func (o *Tomorrowio) GetForecast(latitude float64, longitude float64, endTime string) (*Forecast, error) {
 	res, err := o.client.
-		SetQueryParam("location", location).
+		SetQueryParam("location", fmt.Sprintf("%f,%f", latitude, longitude)).
 		SetQueryParam("fields", "temperature,humidity,visibility,cloudCover").
 		SetQueryParam("timesteps", "1h").
 		SetQueryParam("startTime", "now").
