@@ -23,7 +23,7 @@ func GetCoordinates(location string) (*Coordinates, error) {
 	query.Add("q", location)
 	req.URL.RawQuery = query.Encode()
 
-	res, err := n.client.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil || res.StatusCode != http.StatusOK {
 		return nil, errors.New("nominatim.org: failed to get response")
 	}
