@@ -6,8 +6,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var tomorrowioApiKey string
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "mau",
@@ -22,10 +20,4 @@ func Execute() {
 	if err != nil {
 		os.Exit(1)
 	}
-}
-
-// Set flags and configuration settings.
-func init() {
-	rootCmd.PersistentFlags().StringVarP(&tomorrowioApiKey, "tomorrowio-key", "k", "", "Tomorrow.io API Key (required)")
-	rootCmd.MarkPersistentFlagRequired("tomorrowio-key")
 }

@@ -11,6 +11,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// tomorrowioApiKey is the API key for the Tomorrow.io weather provider.
+var tomorrowioApiKey string
+
 // endTime is the end time for the forecast.
 var endTime string
 
@@ -57,6 +60,8 @@ var forecastCmd = &cobra.Command{
 func init() {
 	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
 	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "nowPlus24h", "End time for the forecast")
+	forecastCmd.PersistentFlags().StringVarP(&tomorrowioApiKey, "tomorrowio-key", "k", "", "Tomorrow.io API Key (required)")
+	forecastCmd.MarkPersistentFlagRequired("tomorrowio-key")
 
 	rootCmd.AddCommand(forecastCmd)
 }
