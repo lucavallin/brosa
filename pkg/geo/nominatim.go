@@ -11,20 +11,8 @@ import (
 // nomBaseUrl is the base URL for the nominatim.org API
 const nomBaseUrl = "https://nominatim.openstreetmap.org"
 
-// Nominatim is a client for the nominatim.org API
-type Nominatim struct {
-	client *http.Client
-}
-
-// NewNominatimClient returns a new Nominatim client.
-func NewNominatimClient() *Nominatim {
-	return &Nominatim{
-		client: &http.Client{},
-	}
-}
-
 // GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (n *Nominatim) GetCoordinates(location string) (*Coordinates, error) {
+func GetCoordinates(location string) (*Coordinates, error) {
 	req, err := http.NewRequest("GET", nomBaseUrl+"/search", nil)
 	if err != nil {
 		return nil, errors.New("nominatim.org: failed to create request")
