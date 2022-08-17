@@ -7,11 +7,13 @@ import (
 	"strings"
 )
 
+// Coordinates represents a geographic location.
 type Coordinates struct {
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 }
 
+// NewCoordinatesFromString creates a new Coordinates from a string
 func NewCoordinatesFromString(commaSeparatedInput string) (*Coordinates, error) {
 	separatedInput := strings.Split(commaSeparatedInput, ",")
 	if len(separatedInput) != 2 {
@@ -29,7 +31,7 @@ func NewCoordinatesFromString(commaSeparatedInput string) (*Coordinates, error) 
 		return nil, errors.New("invalid latitude: " + separatedInput[1])
 	}
 
-	if err := validateLatitudeLongitude(latitude, longitude); err != nil {
+	if err := validateCoordinates(latitude, longitude); err != nil {
 		return nil, err
 	}
 
@@ -39,7 +41,8 @@ func NewCoordinatesFromString(commaSeparatedInput string) (*Coordinates, error) 
 	}, nil
 }
 
-func validateLatitudeLongitude(latitude, longitude float64) error {
+// validateCoordinates checks if the given latitude and longitude are valid
+func validateCoordinates(latitude, longitude float64) error {
 	if latitude < -90 || latitude > 90 {
 		return fmt.Errorf("invalid latitude: %f is not between -90 and 90", latitude)
 	}

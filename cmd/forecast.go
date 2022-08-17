@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/lucavallin/mau/pkg/geo"
-	"github.com/lucavallin/mau/pkg/tomorrowio"
+	"github.com/lucavallin/mau/pkg/weather"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
@@ -26,8 +26,8 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		tio := tomorrowio.NewClient(tomorrowioApiKey)
-		forecast, err := tio.GetForecast(coordinates.Latitude, coordinates.Longitude, endTime)
+		tio := weather.NewTomorrowIoClient(tomorrowioApiKey)
+		forecast, err := tio.GetForecast(coordinates, endTime)
 
 		if err != nil {
 			pterm.Error.Println(err)
@@ -37,18 +37,16 @@ var forecastCmd = &cobra.Command{
 		var table = pterm.TableData{
 			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)"},
 		}
-		for _, timeline := range forecast.Data.Timelines {
-			for _, interval := range timeline.Intervals {
-				date, _ := time.Parse(time.RFC3339, interval.StartTime)
-				// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
-				table = append(table, []string{
-					date.Format("2006-01-02 15:04"),
-					fmt.Sprintf("%2.f", interval.Values.CloudCover),
-					fmt.Sprintf("%2.f", interval.Values.Humidity),
-					fmt.Sprintf("%2.f", interval.Values.Temperature),
-					fmt.Sprintf("%2.f", interval.Values.Visibility),
-				})
-			}
+		for _, interval := range forecast.Intervals {
+			date, _ := time.Parse(time.RFC3339, interval.StartTime)
+			// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
+			table = append(table, []string{
+				date.Format("2006-01-02 15:04"),
+				fmt.Sprintf("%2.f", interval.CloudCover),
+				fmt.Sprintf("%2.f", interval.Humidity),
+				fmt.Sprintf("%2.f", interval.Temperature),
+				fmt.Sprintf("%2.f", interval.Visibility),
+			})
 		}
 
 		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).WithRightAlignment().Render()
