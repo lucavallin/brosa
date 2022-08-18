@@ -15,9 +15,8 @@ go build
 ```
 
 ## TODOs
-- Should I make a Rust (`mau-rs`) version of this just for learning?
 - Add forecast for a specific time, e.g. "tomorrow"
-- Add more data layers to the forecast
+- Add more data layers to the forecast (precipitation, dew point, moonphase, bortle class, sun/no-sun)
 - Add algorithm to generate hour quality-score based on weather data
 - Add tests
 
