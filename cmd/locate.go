@@ -17,7 +17,7 @@ var locateCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		nominatim := geo.NewNominatim()
-		inputLocation := strings.Join(args, "")
+		inputLocation := strings.Join(args, " ")
 		coordinates, err := nominatim.GetCoordinates(inputLocation)
 
 		if err != nil {
