@@ -56,8 +56,8 @@ type tioValues struct {
 	Visibility  float64 `json:"visibility"`
 }
 
-// NewTomorrowIoClient returns a new TomorrowIO client with the given API key.
-func NewTomorrowIoClient(apiKey string) *TomorrowIo {
+// NewTomorrowIo returns a new TomorrowIO client with the given API key.
+func NewTomorrowIo(apiKey string) *TomorrowIo {
 	return &TomorrowIo{
 		client: &http.Client{
 			Transport: &tioTransport{
@@ -116,7 +116,7 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 }
 
 // unmarshalForecast is a wrapper around the json.Unmarshal function that
-// unrmshals the forecast data from the response body into a tioForecast struct,
+// unmarshals the forecast data from the response body into a tioForecast struct,
 // but returns a Forecast struct instead. This is because the API returns a lot of fields we don't need
 // and we want a Forecast struct with only the bare minimum fields
 func (t *TomorrowIo) unmarshalForecast(forecastBody []byte) (*Forecast, error) {

@@ -19,6 +19,7 @@ go build
 - Add more data layers to the forecast (precipitation, dew point, moonphase, bortle class, sun/no-sun)
 - Add algorithm to generate hour quality-score based on weather data
 - Add tests
+- Investigate features of other tools
 
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".

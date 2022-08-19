@@ -19,7 +19,7 @@ var endTime string
 
 // forecastCmd represents the forecast command
 var forecastCmd = &cobra.Command{
-	Use:   "forecast",
+	Use:   "forecast <coordinates>",
 	Short: "Get the forecast for a set of coordinates",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
@@ -29,7 +29,7 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		tio := weather.NewTomorrowIoClient(tomorrowioApiKey)
+		tio := weather.NewTomorrowIo(tomorrowioApiKey)
 		forecast, err := tio.GetForecast(coordinates, endTime)
 
 		if err != nil {
