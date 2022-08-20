@@ -8,7 +8,8 @@ import (
 func main() {
 	viper.AddConfigPath(".")
 	viper.SetConfigName("mau")
-	viper.SetConfigType("yaml")
+	viper.SetConfigType("yml")
+	viper.SetConfigFile("./mau.yml")
 	viper.ReadInConfig()
 
 	cmd.Execute()

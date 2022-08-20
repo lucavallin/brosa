@@ -20,7 +20,7 @@ var initCmd = &cobra.Command{
 		}
 
 		viper.Set("tomorrow_io.api_key", tomorrowioApiKey)
-		viper.WriteConfig()
+		viper.WriteConfigAs(viper.ConfigFileUsed())
 
 		if err != nil {
 			pterm.Error.Println("error writing mau configuration")
