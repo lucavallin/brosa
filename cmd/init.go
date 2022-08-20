@@ -1,19 +1,33 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize the mau CLI configuration",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		// this command should init a config file with the API key for the Tomorrow.io weather provider.
-		fmt.Println("init called")
+		pterm.Info.Println("initializing mau configuration")
+		tomorrowioApiKey, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Tomorrow.io API key")
+
+		if err != nil {
+			pterm.Error.Println("error parsing tomorrow.io API key")
+		}
+
+		viper.Set("tomorrow_io.api_key", tomorrowioApiKey)
+		viper.WriteConfig()
+
+		if err != nil {
+			pterm.Error.Println("error writing mau configuration")
+		}
+
+		pterm.Println("\n")
+		pterm.Success.Println("mau configuration initialized")
 	},
 }
 

@@ -9,10 +9,8 @@ import (
 	"github.com/lucavallin/mau/pkg/weather"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
-
-// tomorrowioApiKey is the API key for the Tomorrow.io weather provider.
-var tomorrowioApiKey string
 
 // endTime is the end time for the forecast.
 var endTime string
@@ -26,6 +24,12 @@ var forecastCmd = &cobra.Command{
 		coordinates, err := geo.NewCoordinatesFromString(args[0])
 		if err != nil {
 			pterm.Error.Println(err)
+			os.Exit(1)
+		}
+
+		tomorrowioApiKey := viper.GetString("tomorrow_io.api_key")
+		if tomorrowioApiKey == "" {
+			pterm.Error.Println("tomorrow.io API key not set. Please run 'mau init' to set it.")
 			os.Exit(1)
 		}
 
@@ -60,7 +64,6 @@ var forecastCmd = &cobra.Command{
 func init() {
 	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
 	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "nowPlus24h", "End time for the forecast")
-	forecastCmd.PersistentFlags().StringVarP(&tomorrowioApiKey, "tomorrowio-key", "k", "", "Tomorrow.io API Key (required)")
 	forecastCmd.MarkPersistentFlagRequired("tomorrowio-key")
 
 	rootCmd.AddCommand(forecastCmd)
