@@ -1,12 +1,24 @@
 # mau
 Mighty Astronomical Utility. A CLI tool written in Golang to retrieve information useful for astronomy.
 
-## How to build
+## How to run
 
 To build `mau`, run the following command:
 
 ```bash
 go build
+```
+
+then run `mau init` to initialize the configuration file (i.e. API keys, etc):
+
+```bash
+mau init
+
+ INFO  initializing mau configuration
+
+Enter your Tomorrow.io API key: XXXXXXXXXXXXXXXXXXXX
+
+ SUCCESS  mau configuration initialized
 ```
 
 ## Available commands
