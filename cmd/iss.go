@@ -16,7 +16,7 @@ import (
 // issCmd represents the iss command
 var issCmd = &cobra.Command{
 	Use:   "iss",
-	Short: "Returns the current position of the International Space Station",
+	Short: "Get the current position of the International Space Station",
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		timestamp := time.Now().Unix()

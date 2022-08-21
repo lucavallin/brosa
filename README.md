@@ -26,7 +26,7 @@ SUCCESS  mau configuration initialized
 - `mau forecast`: Get the weather forecast relevant for astronomy for a set or coordinates. Example:
 
 ```bash
-mau -k <YOUR_TOMORROW_IO_API_KEY> forecast 18.955324,69.649208
+mau forecast 18.955324,69.649208
 
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 |             Date | Cloud Cover (%) | Humidity (%) | Temperature (ºC) | Visibility (km) |
@@ -63,7 +63,7 @@ mau -k <YOUR_TOMORROW_IO_API_KEY> forecast 18.955324,69.649208
 ```bash
 mau locate tromso
 
- SUCCESS  6 coordinate(s) found!
+SUCCESS  6 coordinate(s) found!
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 | Name                                                                                                      | Latitude  | Longitude | Latitude, Longitude |
 | Tromsø, Troms og Finnmark, Norge                                                                          | 69.651648 | 18.955819 | 69.651648,18.955819 |
@@ -73,6 +73,18 @@ mau locate tromso
 | Utleiecompagniet AS, Tromsø, Gimlevegen, Gimle, Tromsø, Troms og Finnmark, 9019, Norge                    | 69.684069 | 18.990678 | 69.684069,18.990678 |
 | Harila, Tromsø, Skattørvegen, Skattøra, Tromsø, Troms og Finnmark, 9018, Norge                            | 69.696052 | 19.013815 | 69.696052,19.013815 |
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+- `mau iss`: Get the current position of the International Space Station. Example:
+
+```bash
+mau iss
+
+SUCCESS  ISS Found
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+| Time             | Latitude | Longitude   | Altitude (km) | Velocity (km/h) | Visibility | Solar latitude | Solar longitude |
+| 2022-08-21 16:59 | 5.319085 | -178.143555 | 419           | 27576           | eclipsed   | 11.977992      | 315.955918      |
+└─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## TODOs
