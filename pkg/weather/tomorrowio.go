@@ -54,6 +54,7 @@ type tioValues struct {
 	Humidity    float64 `json:"humidity"`
 	Temperature float64 `json:"temperature"`
 	Visibility  float64 `json:"visibility"`
+	DewPoint    float64 `json:"dewPoint"`
 }
 
 // NewTomorrowIo returns a new TomorrowIO client with the given API key.
@@ -90,7 +91,7 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 	// this could be represented as a GetForecastRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("location", fmt.Sprintf("%f,%f", coordinates.Latitude, coordinates.Longitude))
-	query.Add("fields", "temperature,humidity,visibility,cloudCover")
+	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint")
 	query.Add("timesteps", "1h")
 	query.Add("startTime", "now")
 	query.Add("endTime", endTime)
@@ -137,6 +138,7 @@ func (t *TomorrowIo) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
 		forecastInterval.Humidity = interval.Values.Humidity
 		forecastInterval.Temperature = interval.Values.Temperature
 		forecastInterval.Visibility = interval.Values.Visibility
+		forecastInterval.DewPoint = interval.Values.DewPoint
 		forecast.Intervals = append(forecast.Intervals, forecastInterval)
 	}
 

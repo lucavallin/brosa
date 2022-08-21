@@ -16,6 +16,7 @@ type Interval struct {
 	Humidity    float64 `json:"humidity"`
 	Temperature float64 `json:"temperature"`
 	Visibility  float64 `json:"visibility"`
+	DewPoint    float64 `json:"dewPoint"`
 }
 
 // Provider is the interface for the weather provider.
