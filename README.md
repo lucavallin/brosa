@@ -96,6 +96,7 @@ SUCCESS  ISS Found
 - Add Civil/nautical/astronomical darkness times?
 - Add dashboard with all info that refreshes every hour and sends events to user
 - Cache weather results for a set of coordinates for one hour
+- Split cmd and UI?
 
 
 ## Thoughts
