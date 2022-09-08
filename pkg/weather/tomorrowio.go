@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/mau/pkg/geo"
 )
 
@@ -50,11 +51,12 @@ type tioInterval struct {
 
 // tioValues is a struct that represents the values returned by the API
 type tioValues struct {
-	CloudCover  float64 `json:"cloudCover"`
-	Humidity    float64 `json:"humidity"`
-	Temperature float64 `json:"temperature"`
-	Visibility  float64 `json:"visibility"`
-	DewPoint    float64 `json:"dewPoint"`
+	CloudCover               float64 `json:"cloudCover"`
+	Humidity                 float64 `json:"humidity"`
+	Temperature              float64 `json:"temperature"`
+	Visibility               float64 `json:"visibility"`
+	DewPoint                 float64 `json:"dewPoint"`
+	PrecipitationProbability float64 `json:"precipitationProbability"`
 }
 
 // NewTomorrowIo returns a new TomorrowIO client with the given API key.
@@ -91,7 +93,7 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 	// this could be represented as a GetForecastRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("location", fmt.Sprintf("%f,%f", coordinates.Latitude, coordinates.Longitude))
-	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint")
+	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint,precipitationProbability")
 	query.Add("timesteps", "1h")
 	query.Add("startTime", "now")
 	query.Add("endTime", "nowPlus"+endTime)
@@ -99,6 +101,7 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 
 	res, err := t.client.Do(req)
 	if err != nil || res.StatusCode != http.StatusOK {
+		spew.Dump(io.ReadAll(res.Body))
 		return nil, errors.New("tomorrow.io: failed to get response")
 	}
 	defer res.Body.Close()
@@ -139,6 +142,7 @@ func (t *TomorrowIo) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
 		forecastInterval.Temperature = interval.Values.Temperature
 		forecastInterval.Visibility = interval.Values.Visibility
 		forecastInterval.DewPoint = interval.Values.DewPoint
+		forecastInterval.PrecipitationProbability = interval.Values.PrecipitationProbability
 		forecast.Intervals = append(forecast.Intervals, forecastInterval)
 	}
 

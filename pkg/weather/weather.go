@@ -11,12 +11,13 @@ type Forecast struct {
 
 // Interval represents the weather for a single time period.
 type Interval struct {
-	StartTime   string  `json:"startTime"`
-	CloudCover  float64 `json:"cloudCover"`
-	Humidity    float64 `json:"humidity"`
-	Temperature float64 `json:"temperature"`
-	Visibility  float64 `json:"visibility"`
-	DewPoint    float64 `json:"dewPoint"`
+	StartTime                string  `json:"startTime"`
+	CloudCover               float64 `json:"cloudCover"`
+	Humidity                 float64 `json:"humidity"`
+	Temperature              float64 `json:"temperature"`
+	Visibility               float64 `json:"visibility"`
+	DewPoint                 float64 `json:"dewPoint"`
+	PrecipitationProbability float64 `json:"precipitationProbability"`
 }
 
 // Provider is the interface for the weather provider.

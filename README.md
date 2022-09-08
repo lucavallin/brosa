@@ -88,13 +88,14 @@ SUCCESS  ISS Found
 ```
 
 ## TODOs
-- Add forecast for a specific time, e.g. "tomorrow"
-- Add more data layers to the forecast (precipitation, moonphase, bortle class, sun/no-sun)
+- Add support for "best" timestep
+- Make it possible to set start time for forecast
+- Add more data layers to the forecast (moon phase, bortle class, sun/no-sun)
 - Add algorithm to generate hour quality-score based on weather data
 - Add tests
-- Add Civil/nautical/astronomical darkness times
+- Add Civil/nautical/astronomical darkness times?
 - Add dashboard with all info that refreshes every hour and sends events to user
-- Cache weather results for one hour
+- Cache weather results for a set of coordinates for one hour
 
 
 ## Thoughts

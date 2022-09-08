@@ -42,7 +42,7 @@ var forecastCmd = &cobra.Command{
 		}
 
 		var table = pterm.TableData{
-			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)", "Dew Point (ºC)"},
+			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)", "Dew Point (ºC)", "Precipitation Probability (%)"},
 		}
 		for _, interval := range forecast.Intervals {
 			date, _ := time.Parse(time.RFC3339, interval.StartTime)
@@ -54,6 +54,7 @@ var forecastCmd = &cobra.Command{
 				fmt.Sprintf("%2.f", interval.Temperature),
 				fmt.Sprintf("%2.f", interval.Visibility),
 				fmt.Sprintf("%2.f", interval.DewPoint),
+				fmt.Sprintf("%2.f", interval.PrecipitationProbability),
 			})
 		}
 

@@ -3,8 +3,10 @@ module github.com/lucavallin/mau
 go 1.19
 
 require (
+	github.com/davecgh/go-spew v1.1.1
 	github.com/pterm/pterm v0.12.45
 	github.com/spf13/cobra v1.5.0
+	github.com/spf13/viper v1.12.0
 )
 
 require (
@@ -26,7 +28,6 @@ require (
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.12.0 // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
