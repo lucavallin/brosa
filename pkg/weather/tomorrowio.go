@@ -94,7 +94,7 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint")
 	query.Add("timesteps", "1h")
 	query.Add("startTime", "now")
-	query.Add("endTime", endTime)
+	query.Add("endTime", "nowPlus"+endTime)
 	req.URL.RawQuery = query.Encode()
 
 	res, err := t.client.Do(req)

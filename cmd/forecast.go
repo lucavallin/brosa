@@ -64,7 +64,7 @@ var forecastCmd = &cobra.Command{
 // Set flags and configuration settings.
 func init() {
 	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
-	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "nowPlus24h", "End time for the forecast")
+	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "24h", "End time for the forecast (e.g. 3h, 24h, 48h, 1d, 2d, 4d, 7d)")
 
 	rootCmd.AddCommand(forecastCmd)
 }
