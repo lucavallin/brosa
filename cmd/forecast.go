@@ -27,13 +27,13 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		tomorrowioApiKey := viper.GetString("tomorrow_io.api_key")
-		if tomorrowioApiKey == "" {
+		tomorrowApiKey := viper.GetString("tomorrow.api_key")
+		if tomorrowApiKey == "" {
 			pterm.Error.Println("tomorrow.io API key not set. Please run 'mau init' to set it.")
 			os.Exit(1)
 		}
 
-		tio := weather.NewTomorrowIo(tomorrowioApiKey)
+		tio := weather.NewTomorrowClient(tomorrowApiKey)
 		forecast, err := tio.GetForecast(coordinates, endTime)
 
 		if err != nil {

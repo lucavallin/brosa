@@ -7,50 +7,49 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/mau/pkg/geo"
 )
 
-// Notice: for internal names, we use "tio" instead of "TomorrowIO"
-// tioBaseUrl is the base URL for the tomorrow.io API
-const tioBaseUrl = "https://api.tomorrow.io/v4"
+// Notice: for internal names, we use "tom" instead of "Tomorrow"
+// tomBaseUrl is the base URL for the tomorrow.io API
+const tomBaseUrl = "https://api.tomorrow.io/v4"
 
-// TomorrowIo is a client for the tomorrow.io API
-type TomorrowIo struct {
+// Tomorrow is a client for the tomorrow.io API
+type Tomorrow struct {
 	client *http.Client
 }
 
-// tioTransport is a custom transport for the TomorrowIo client
-type tioTransport struct {
+// tomTransport is a custom transport for the Tomorrow client
+type tomTransport struct {
 	apiKey string
 }
 
-// tioForecast is a struct that represents the forecast data returned by the API
-type tioForecast struct {
-	Data tioData `json:"data"`
+// tomForecast is a struct that represents the forecast data returned by the API
+type tomForecast struct {
+	Data tomData `json:"data"`
 }
 
-// tioData is a struct that represents the data returned by the API
-type tioData struct {
-	Timelines []tioTimeline `json:"timelines"`
+// tomData is a struct that represents the data returned by the API
+type tomData struct {
+	Timelines []tomTimeline `json:"timelines"`
 }
 
-// tioTimeline is a struct that represents the timeline data returned by the API
-type tioTimeline struct {
+// tomTimeline is a struct that represents the timeline data returned by the API
+type tomTimeline struct {
 	Timestep  string        `json:"timestep"`
 	EndTime   string        `json:"endTime"`
 	StartTime string        `json:"startTime"`
-	Intervals []tioInterval `json:"intervals"`
+	Intervals []tomInterval `json:"intervals"`
 }
 
-// tioInterval is a struct that represents the interval data returned by the API
-type tioInterval struct {
+// tomInterval is a struct that represents the interval data returned by the API
+type tomInterval struct {
 	StartTime string    `json:"startTime"`
-	Values    tioValues `json:"values"`
+	Values    tomValues `json:"values"`
 }
 
-// tioValues is a struct that represents the values returned by the API
-type tioValues struct {
+// tomValues is a struct that represents the values returned by the API
+type tomValues struct {
 	CloudCover               float64 `json:"cloudCover"`
 	Humidity                 float64 `json:"humidity"`
 	Temperature              float64 `json:"temperature"`
@@ -59,20 +58,20 @@ type tioValues struct {
 	PrecipitationProbability float64 `json:"precipitationProbability"`
 }
 
-// NewTomorrowIo returns a new TomorrowIO client with the given API key.
-func NewTomorrowIo(apiKey string) *TomorrowIo {
-	return &TomorrowIo{
+// NewTomorrowClient returns a new Tomorrow client with the given API key.
+func NewTomorrowClient(apiKey string) *Tomorrow {
+	return &Tomorrow{
 		client: &http.Client{
-			Transport: &tioTransport{
+			Transport: &tomTransport{
 				apiKey: apiKey,
 			},
 		},
 	}
 }
 
-// tioTransport is a custom transport for the tio client,
+// tomTransport is a custom transport for the Tomorrow client,
 // used to set common headers and provide the API key.
-func (t *tioTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Accept", "application/json")
 
 	query := req.URL.Query()
@@ -84,8 +83,8 @@ func (t *tioTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 // GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (*Forecast, error) {
-	req, err := http.NewRequest("GET", tioBaseUrl+"/timelines", nil)
+func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, endTime string) (*Forecast, error) {
+	req, err := http.NewRequest("GET", tomBaseUrl+"/timelines", nil)
 	if err != nil {
 		return nil, errors.New("tomorrow.io: failed to create request")
 	}
@@ -101,7 +100,6 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 
 	res, err := t.client.Do(req)
 	if err != nil || res.StatusCode != http.StatusOK {
-		spew.Dump(io.ReadAll(res.Body))
 		return nil, errors.New("tomorrow.io: failed to get response")
 	}
 	defer res.Body.Close()
@@ -120,11 +118,11 @@ func (t *TomorrowIo) GetForecast(coordinates *geo.Coordinates, endTime string) (
 }
 
 // unmarshalForecast is a wrapper around the json.Unmarshal function that
-// unmarshals the forecast data from the response body into a tioForecast struct,
+// unmarshals the forecast data from the response body into a tomForecast struct,
 // but returns a Forecast struct instead. This is because the API returns a lot of fields we don't need
 // and we want a Forecast struct with only the bare minimum fields
-func (t *TomorrowIo) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
-	var tioForecast tioForecast
+func (t *Tomorrow) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
+	var tioForecast tomForecast
 
 	// here we'll have to do some manual unmarshalling
 	if err := json.Unmarshal(forecastBody, &tioForecast); err != nil {
