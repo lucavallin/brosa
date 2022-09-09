@@ -27,7 +27,7 @@ type nomLocation struct {
 	DisplayName string `json:"display_name"`
 }
 
-// NewNominatim returns a new TomorrowIO client with the given API key.
+// NewNominatim returns a new Nominatim client with the given API key.
 func NewNominatim() *Nominatim {
 	return &Nominatim{
 		client: &http.Client{
@@ -36,8 +36,6 @@ func NewNominatim() *Nominatim {
 	}
 }
 
-// nomTransport is a custom transport for the tio client,
-// used to set common headers and provide the API key.
 func (n *nomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Accept", "application/json")
 
