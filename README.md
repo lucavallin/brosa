@@ -100,18 +100,17 @@ mau day 45.806691,12.206316
 ```
 
 ## TODOs
-IN PROGRESS
-====
-- Add support for "best" timestep (or devise algorithm to calculate best time for observing)
-- Make it possible to set start time for forecast
-====
-
 - Forecast command: use ISO 8601 (2019-03-20T14:09:50Z) for start and end times
-- Add dashboard with all info that refreshes every hour and sends events to user
 - Cache weather results for a set of coordinates for one hour
-- Split cmd and UI?
+- Add dashboard with all info that refreshes every hour and sends events to user
 - Refactoring: Architecture around features, not providers.
 - Add unit/integration tests
 
+In progress
+```
+- Add support for "best" timestep (or devise algorithm to calculate best time for observing)
+- Make it possible to set start time for forecast
+```
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".
+- UI-specific code could be separated from the cmd package, but in this app it might be overkill
