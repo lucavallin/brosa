@@ -3,8 +3,11 @@ package astro
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/lucavallin/mau/pkg/geo"
 )
 
 // Notice: for internal names, we use "ipg" instead of "IPGeolocation"
@@ -19,25 +22,6 @@ type IPGeolocation struct {
 // ipgTransport is a custom transport for the IPGeolocation client
 type ipgTransport struct {
 	apiKey string
-}
-
-// ipgResult is a struct that represents the data returned by the API
-type ipgResult struct {
-	Sunrise              string  `json:"sunrise"`
-	Sunset               string  `json:"sunset"`
-	SunStatus            string  `json:"sun_status"`
-	SolarNoon            string  `json:"solar_noon"`
-	DayLength            string  `json:"day_length"`
-	SunAltitude          float64 `json:"sun_altitude"`
-	SunDistance          float64 `json:"sun_distance"`
-	SunAzimuth           float64 `json:"sun_azimuth"`
-	Moonrise             string  `json:"moonrise"`
-	Moonset              string  `json:"moonset"`
-	MoonStatus           string  `json:"moon_status"`
-	MoonAltitude         float64 `json:"moon_altitude"`
-	MoonDistance         float64 `json:"moon_distance"`
-	MoonAzimuth          float64 `json:"moon_azimuth"`
-	MoonParallacticAngle float64 `json:"moon_parallactic_angle"`
 }
 
 // NewIPGeolocation returns a new IPGeolocation client with the given API key.
@@ -61,17 +45,17 @@ func (i *ipgTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return http.DefaultTransport.RoundTrip(req)
 }
 
-// GetCoordinates returns a slice of Coordinates for the given location string
-func (i *IPGeolocation) GetCoordinates(location string) (*ipgResult, error) {
-	req, err := http.NewRequest("GET", ipgBaseUrl+"/search", nil)
+// GetDayInformation returns a pointer to a struct containing current information about the sun and the moon
+func (i *IPGeolocation) GetDayInformation(coordinates *geo.Coordinates) (*DayInformation, error) {
+	req, err := http.NewRequest("GET", ipgBaseUrl+"/astronomy", nil)
 	if err != nil {
 		return nil, errors.New("ipgeolocation.com: failed to create request")
 	}
 
-	// this could be represented as a GetCoordinates struct, but I'm not sure it's worth it
+	// this could be represented as a GetDayInformation struct, but I'm not sure it's worth it
 	query := req.URL.Query()
-	query.Add("lat", location)
-	query.Add("long", location)
+	query.Add("lat", fmt.Sprintf("%3.f", coordinates.Latitude))
+	query.Add("long", fmt.Sprintf("%3.f", coordinates.Longitude))
 	req.URL.RawQuery = query.Encode()
 
 	res, err := i.client.Do(req)
@@ -85,10 +69,10 @@ func (i *IPGeolocation) GetCoordinates(location string) (*ipgResult, error) {
 		return nil, errors.New("ipgeolocation.com: failed to read response body")
 	}
 
-	var locationInfo ipgResult
-	if err := json.Unmarshal(body, &locationInfo); err != nil {
+	var dayInformation DayInformation
+	if err := json.Unmarshal(body, &dayInformation); err != nil {
 		return nil, err
 	}
 
-	return locationInfo, nil
+	return &dayInformation, nil
 }
