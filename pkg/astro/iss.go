@@ -8,14 +8,14 @@ import (
 	"strconv"
 )
 
-// GetISSBodyPosition returns the position of the ISS at a given UNIX timestamp
+// GetISSPosition returns the position of the ISS at a given UNIX timestamp
 func GetISSPosition(timestamp int64) (*BodyPosition, error) {
 	req, err := http.NewRequest("GET", "https://api.wheretheiss.at/v1/satellites/25544", nil)
 	if err != nil {
 		return nil, errors.New("wheretheiss.at: failed to create request")
 	}
 
-	// this could be represented as a GetCoordinates struct, but I'm not sure it's worth it
+	// this could be represented as a GetISSPositionRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("timestamp", strconv.FormatInt(timestamp, 10))
 	req.URL.RawQuery = query.Encode()

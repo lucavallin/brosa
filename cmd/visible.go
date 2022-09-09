@@ -20,7 +20,7 @@ var visibleCmd = &cobra.Command{
 // Set flags and configuration settings.
 func init() {
 	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
-	forecastCmd.PersistentFlags().StringVarP(&objectType, "object-type", "t", "all", "Type of objects to search for")
+	visibleCmd.PersistentFlags().StringVarP(&objectType, "object-type", "t", "all", "Type of objects to search for")
 
 	rootCmd.AddCommand(visibleCmd)
 }

@@ -52,7 +52,7 @@ func (i *IPGeolocation) GetDayInformation(coordinates *geo.Coordinates) (*DayInf
 		return nil, errors.New("ipgeolocation.com: failed to create request")
 	}
 
-	// this could be represented as a GetDayInformation struct, but I'm not sure it's worth it
+	// this could be represented as a GetDayInformationRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("lat", fmt.Sprintf("%3.f", coordinates.Latitude))
 	query.Add("long", fmt.Sprintf("%3.f", coordinates.Longitude))

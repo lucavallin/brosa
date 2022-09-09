@@ -53,7 +53,7 @@ func (n *Nominatim) GetCoordinates(location string) (*[]Coordinates, error) {
 		return nil, errors.New("nominatim.org: failed to create request")
 	}
 
-	// this could be represented as a GetCoordinates struct, but I'm not sure it's worth it
+	// this could be represented as a GetCoordinatesRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("q", location)
 	req.URL.RawQuery = query.Encode()

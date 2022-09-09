@@ -83,7 +83,7 @@ func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 // GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, endTime string) (*Forecast, error) {
+func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime string, endTime string, onlyBestForecast bool) (*Forecast, error) {
 	req, err := http.NewRequest("GET", tomBaseUrl+"/timelines", nil)
 	if err != nil {
 		return nil, errors.New("tomorrow.io: failed to create request")
@@ -93,8 +93,20 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, endTime string) (*F
 	query := req.URL.Query()
 	query.Add("location", fmt.Sprintf("%f,%f", coordinates.Latitude, coordinates.Longitude))
 	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint,precipitationProbability")
-	query.Add("timesteps", "1h")
-	query.Add("startTime", "now")
+
+	// onlyBestForecast is a flag that indicates whether to retrieve only the forecast with the best weather conditions for astronomy
+	if onlyBestForecast {
+		query.Add("timesteps", "best")
+	} else {
+		query.Add("timesteps", "1h")
+	}
+
+	// TODO: add check, startTime cannot be after endTime
+	if startTime != "now" {
+		startTime = "nowPlus" + startTime
+	}
+
+	query.Add("startTime", startTime)
 	query.Add("endTime", "nowPlus"+endTime)
 	req.URL.RawQuery = query.Encode()
 

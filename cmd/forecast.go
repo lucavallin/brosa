@@ -12,8 +12,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+// startTime is the start time for the forecast.
+var startTime string
+
 // endTime is the end time for the forecast.
 var endTime string
+
+// onlyBestForecast is a flag that indicates whether to retrieve only the forecast with the best weather conditions for astronomy.
+var onlyBestForecast bool
 
 // forecastCmd represents the forecast command
 var forecastCmd = &cobra.Command{
@@ -34,7 +40,7 @@ var forecastCmd = &cobra.Command{
 		}
 
 		tio := weather.NewTomorrowClient(tomorrowApiKey)
-		forecast, err := tio.GetForecast(coordinates, endTime)
+		forecast, err := tio.GetForecast(coordinates, startTime, endTime, onlyBestForecast)
 
 		if err != nil {
 			pterm.Error.Println(err)
@@ -64,8 +70,9 @@ var forecastCmd = &cobra.Command{
 
 // Set flags and configuration settings.
 func init() {
-	// this format for the endTime is funny, we'll have to think of a way to make it more intuitive.
+	forecastCmd.PersistentFlags().StringVarP(&startTime, "start-time", "s", "now", "Start time for the forecast (e.g. now, 3h, 24h, 48h, 1d, 2d, 4d, 7d)")
 	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "24h", "End time for the forecast (e.g. 3h, 24h, 48h, 1d, 2d, 4d, 7d)")
+	forecastCmd.PersistentFlags().BoolVarP(&onlyBestForecast, "best", "b", true, "Retrieve only the forecast with the best weather conditions for astronomy")
 
 	rootCmd.AddCommand(forecastCmd)
 }
