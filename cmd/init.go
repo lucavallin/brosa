@@ -13,15 +13,23 @@ var initCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		pterm.Info.Println("initializing mau configuration")
-		tomorrowioApiKey, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Tomorrow.io API key")
 
+		// Set the Tomorrow.io API key
+		tomorrowApiKey, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Tomorrow.io API key")
 		if err != nil {
 			pterm.Error.Println("error parsing tomorrow.io API key")
 		}
+		viper.Set("tomorrow.api_key", tomorrowApiKey)
 
-		viper.Set("tomorrow_io.api_key", tomorrowioApiKey)
+		// Set the IPGeolocation.io API key
+		ipGeolocationApiKey, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your IPGeolocation.io API key")
+		if err != nil {
+			pterm.Error.Println("error parsing ipgeolocation.io API key")
+		}
+		viper.Set("ipgeolocation.api_key", ipGeolocationApiKey)
+
+		// Save the configuration to mau.yml
 		viper.WriteConfigAs(viper.ConfigFileUsed())
-
 		if err != nil {
 			pterm.Error.Println("error writing mau configuration")
 		}
