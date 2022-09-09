@@ -88,16 +88,14 @@ SUCCESS  ISS Found
 ```
 
 ## TODOs
-- Add support for "best" timestep
+- Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Make it possible to set start time for forecast
-- Add more data layers to the forecast (moon phase, bortle class, sun/no-sun)
-- Add algorithm to generate hour quality-score based on weather data
+- Add command to show location info (moon phase, bortle class, sun/no-sun)
 - Add tests
-- Add Civil/nautical/astronomical darkness times?
 - Add dashboard with all info that refreshes every hour and sends events to user
 - Cache weather results for a set of coordinates for one hour
 - Split cmd and UI?
-
+- Refactoring: architecture around features, not providers
 
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".
