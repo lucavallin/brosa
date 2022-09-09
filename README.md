@@ -18,6 +18,8 @@ INFO  initializing mau configuration
 
 Enter your Tomorrow.io API key: XXXXXXXXXXXXXXXXXXXX
 
+Enter your IPGeolocation.com API key: XXXXXXXXXXXXXXXXXXXX
+
 SUCCESS  mau configuration initialized
 ```
 
@@ -85,12 +87,21 @@ SUCCESS  ISS Found
 | Time             | Latitude | Longitude   | Altitude (km) | Velocity (km/h) | Visibility | Solar latitude | Solar longitude |
 | 2022-08-21 16:59 | 5.319085 | -178.143555 | 419           | 27576           | eclipsed   | 11.977992      | 315.955918      |
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+- `mau day`: Get current information about the Sun and the Moon for a given location. Example:
+
+```bash
+mau day 45.806691,12.206316
+
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+| Sunrise | Sunset | Day length (h) | Sun altitude (°) | Sun azimuth (°) | Moonrise | Moonset | Moon altitude (°) | Moon azimuth (°) |
+|   06:42 |  19:35 |          12:53 |              -15 |             294 |    19:38 |   04:58 |                12 |              123 |
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## TODOs
 - Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Make it possible to set start time for forecast
-- Add command to show location info (moon phase, bortle class, sun/no-sun)
 - Add tests
 - Add dashboard with all info that refreshes every hour and sends events to user
 - Cache weather results for a set of coordinates for one hour
