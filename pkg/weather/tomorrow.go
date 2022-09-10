@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/mau/pkg/geo"
 )
 
@@ -37,14 +39,14 @@ type tomData struct {
 // tomTimeline is a struct that represents the timeline data returned by the API
 type tomTimeline struct {
 	Timestep  string        `json:"timestep"`
-	EndTime   string        `json:"endTime"`
-	StartTime string        `json:"startTime"`
+	EndTime   time.Time     `json:"endTime"`
+	StartTime time.Time     `json:"startTime"`
 	Intervals []tomInterval `json:"intervals"`
 }
 
 // tomInterval is a struct that represents the interval data returned by the API
 type tomInterval struct {
-	StartTime string    `json:"startTime"`
+	StartTime time.Time `json:"startTime"`
 	Values    tomValues `json:"values"`
 }
 
@@ -83,7 +85,7 @@ func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 // GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime string, endTime string, onlyBestForecast bool) (*Forecast, error) {
+func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time, endTime time.Time, onlyBestForecast bool) (*Forecast, error) {
 	req, err := http.NewRequest("GET", tomBaseUrl+"/timelines", nil)
 	if err != nil {
 		return nil, errors.New("tomorrow.io: failed to create request")
@@ -95,19 +97,18 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime string, e
 	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint,precipitationProbability")
 
 	// onlyBestForecast is a flag that indicates whether to retrieve only the forecast with the best weather conditions for astronomy
-	if onlyBestForecast {
-		query.Add("timesteps", "best")
-	} else {
-		query.Add("timesteps", "1h")
+	// if onlyBestForecast {
+	// 	query.Add("timesteps", "best")
+	// } else {
+	query.Add("timesteps", "1h")
+	// }
+
+	if startTime.After(endTime) {
+		return nil, errors.New("tomorrow.io: startTime must be before endTime")
 	}
 
-	// TODO: add check, startTime cannot be after endTime
-	if startTime != "now" {
-		startTime = "nowPlus" + startTime
-	}
-
-	query.Add("startTime", startTime)
-	query.Add("endTime", "nowPlus"+endTime)
+	query.Add("startTime", startTime.Format(time.RFC3339))
+	query.Add("endTime", endTime.Format(time.RFC3339))
 	req.URL.RawQuery = query.Encode()
 
 	res, err := t.client.Do(req)
@@ -137,13 +138,15 @@ func (t *Tomorrow) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
 	var tioForecast tomForecast
 
 	// here we'll have to do some manual unmarshalling
+	spew.Dump(forecastBody)
 	if err := json.Unmarshal(forecastBody, &tioForecast); err != nil {
 		return nil, errors.New("tomorrow.io: failed to unmarshal response body")
 	}
 
-	var forecast Forecast
-	forecast.StartTime = tioForecast.Data.Timelines[0].StartTime
-	forecast.EndTime = tioForecast.Data.Timelines[0].EndTime
+	var forecast = Forecast{
+		StartTime: tioForecast.Data.Timelines[0].StartTime,
+		EndTime:   tioForecast.Data.Timelines[0].EndTime,
+	}
 	for _, interval := range tioForecast.Data.Timelines[0].Intervals {
 		var forecastInterval Interval
 		forecastInterval.StartTime = interval.StartTime

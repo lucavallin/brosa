@@ -1,23 +1,27 @@
 package weather
 
-import "github.com/lucavallin/mau/pkg/geo"
+import (
+	"time"
+
+	"github.com/lucavallin/mau/pkg/geo"
+)
 
 // Forecast represents the forecast for a location.
 type Forecast struct {
-	StartTime string     `json:"startTime"`
-	EndTime   string     `json:"endTime"`
+	StartTime time.Time  `json:"startTime"`
+	EndTime   time.Time  `json:"endTime"`
 	Intervals []Interval `json:"intervals"`
 }
 
 // Interval represents the weather for a single time period.
 type Interval struct {
-	StartTime                string  `json:"startTime"`
-	CloudCover               float64 `json:"cloudCover"`
-	Humidity                 float64 `json:"humidity"`
-	Temperature              float64 `json:"temperature"`
-	Visibility               float64 `json:"visibility"`
-	DewPoint                 float64 `json:"dewPoint"`
-	PrecipitationProbability float64 `json:"precipitationProbability"`
+	StartTime                time.Time `json:"startTime"`
+	CloudCover               float64   `json:"cloudCover"`
+	Humidity                 float64   `json:"humidity"`
+	Temperature              float64   `json:"temperature"`
+	Visibility               float64   `json:"visibility"`
+	DewPoint                 float64   `json:"dewPoint"`
+	PrecipitationProbability float64   `json:"precipitationProbability"`
 }
 
 // Provider is the interface for the weather provider.

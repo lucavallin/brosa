@@ -100,15 +100,11 @@ mau day 45.806691,12.206316
 ```
 
 ## TODOs
-- Forecast command: use ISO 8601 (2019-03-20T14:09:50Z) for start and end times
+- Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Cache weather results for a set of coordinates for one hour
 - Add dashboard with all info that refreshes every hour and sends events to user
-
-In progress
-```
-- Add support for "best" timestep (or devise algorithm to calculate best time for observing)
-- Make it possible to set start time for forecast
-```
+- Remove uneeded TODO comments
+- Investigate why tomorrow.io isn't returning the correct timezone
 
 ## Refactoring
 - Add unit/integration tests

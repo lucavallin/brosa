@@ -33,6 +33,16 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		startTime, err := time.Parse(time.RFC3339, startTime)
+		if err != nil {
+			pterm.Error.Println("Invalid start-time provided. Please provide a valid ISO 8601 time.")
+		}
+
+		endTime, err := time.Parse(time.RFC3339, endTime)
+		if err != nil {
+			pterm.Error.Println("Invalid start-time provided. Please provide a valid ISO 8601 time.")
+		}
+
 		tomorrowApiKey := viper.GetString("tomorrow.api_key")
 		if tomorrowApiKey == "" {
 			pterm.Error.Println("tomorrow.io API key not set. Please run 'mau init' to set it.")
@@ -51,10 +61,8 @@ var forecastCmd = &cobra.Command{
 			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)", "Dew Point (ºC)", "Precipitation Probability (%)"},
 		}
 		for _, interval := range forecast.Intervals {
-			date, _ := time.Parse(time.RFC3339, interval.StartTime)
-			// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
 			table = append(table, []string{
-				date.Format("2006-01-02 15:04"),
+				interval.StartTime.Format("2006-01-02 15:04"),
 				fmt.Sprintf("%2.f", interval.CloudCover),
 				fmt.Sprintf("%2.f", interval.Humidity),
 				fmt.Sprintf("%2.f", interval.Temperature),
@@ -70,8 +78,8 @@ var forecastCmd = &cobra.Command{
 
 // Set flags and configuration settings.
 func init() {
-	forecastCmd.PersistentFlags().StringVarP(&startTime, "start-time", "s", "now", "Start time for the forecast (e.g. now, 3h, 24h, 48h, 1d, 2d, 4d, 7d)")
-	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", "24h", "End time for the forecast (e.g. 3h, 24h, 48h, 1d, 2d, 4d, 7d)")
+	forecastCmd.PersistentFlags().StringVarP(&startTime, "start-time", "s", time.Now().Format(time.RFC3339), "Start time for the forecast (in ISO 8601 format)")
+	forecastCmd.PersistentFlags().StringVarP(&endTime, "end-time", "e", time.Now().AddDate(0, 0, 1).Format(time.RFC3339), "End time for the forecast (in ISO 8601 format)")
 	forecastCmd.PersistentFlags().BoolVarP(&onlyBestForecast, "best", "b", true, "Retrieve only the forecast with the best weather conditions for astronomy")
 
 	rootCmd.AddCommand(forecastCmd)
