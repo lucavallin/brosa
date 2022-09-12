@@ -53,7 +53,6 @@ func (n *Nominatim) GetCoordinates(location string) (*[]Coordinates, error) {
 		return nil, errors.New("nominatim.org: failed to create request")
 	}
 
-	// this could be represented as a GetCoordinatesRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("q", location)
 	req.URL.RawQuery = query.Encode()
@@ -84,7 +83,6 @@ func (n *Nominatim) GetCoordinates(location string) (*[]Coordinates, error) {
 func (n *Nominatim) unmarshalLocationList(locationListBody []byte) (*[]Coordinates, error) {
 	var nomLocationList []nomLocation
 
-	// here we'll have to do some manual unmarshalling
 	if err := json.Unmarshal(locationListBody, &nomLocationList); err != nil {
 		return nil, errors.New("nominatim.org: failed to unmarshal response body")
 	}

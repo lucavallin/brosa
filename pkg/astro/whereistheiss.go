@@ -15,7 +15,6 @@ func GetISSPosition(timestamp int64) (*BodyPosition, error) {
 		return nil, errors.New("wheretheiss.at: failed to create request")
 	}
 
-	// this could be represented as a GetISSPositionRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("timestamp", strconv.FormatInt(timestamp, 10))
 	req.URL.RawQuery = query.Encode()

@@ -30,7 +30,6 @@ var locateCmd = &cobra.Command{
 			{"Name", "Latitude", "Longitude", "Latitude, Longitude"},
 		}
 		for _, coordinate := range *coordinates {
-			// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
 			table = append(table, []string{
 				coordinate.Name,
 				fmt.Sprintf("%f", coordinate.Latitude),

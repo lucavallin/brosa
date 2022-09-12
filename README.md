@@ -103,7 +103,6 @@ mau day 45.806691,12.206316
 - Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Cache weather results for a set of coordinates for one hour
 - Add dashboard with all info that refreshes every hour and sends events to user
-- Remove uneeded TODO comments
 - Investigate why tomorrow.io isn't returning the correct timezone
 
 ## Refactoring

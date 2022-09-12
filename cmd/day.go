@@ -41,7 +41,6 @@ var dayCmd = &cobra.Command{
 			{"Sunrise", "Sunset", "Day length (h)", "Sun altitude (°)", "Sun azimuth (°)", "Moonrise", "Moonset", "Moon altitude (°)", "Moon azimuth (°)"},
 		}
 
-		// we'll end up using this logic elsewhere too, so it's a good candidate for a function.
 		table = append(table, []string{
 			dayInformation.Sunrise,
 			dayInformation.Sunset,

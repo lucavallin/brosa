@@ -71,8 +71,7 @@ func NewTomorrowClient(apiKey string) *Tomorrow {
 	}
 }
 
-// tomTransport is a custom transport for the Tomorrow client,
-// used to set common headers and provide the API key.
+// tomTransport is a custom transport for the Tomorrow client used to set common headers and provide the API key.
 func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("Accept", "application/json")
 
@@ -91,7 +90,6 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time
 		return nil, errors.New("tomorrow.io: failed to create request")
 	}
 
-	// this could be represented as a GetForecastRequest struct, but I'm not sure it's worth it
 	query := req.URL.Query()
 	query.Add("location", fmt.Sprintf("%f,%f", coordinates.Latitude, coordinates.Longitude))
 	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint,precipitationProbability")
@@ -137,7 +135,6 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time
 func (t *Tomorrow) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
 	var tioForecast tomForecast
 
-	// here we'll have to do some manual unmarshalling
 	spew.Dump(forecastBody)
 	if err := json.Unmarshal(forecastBody, &tioForecast); err != nil {
 		return nil, errors.New("tomorrow.io: failed to unmarshal response body")
