@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/mau/pkg/geo"
 )
 
@@ -107,6 +106,11 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time
 
 	query.Add("startTime", startTime.Format(time.RFC3339))
 	query.Add("endTime", endTime.Format(time.RFC3339))
+
+	// Unfortunately, time.Now().Zone() returns "CEST" here, which is not a IANA timezone supported by tomorrow.io
+	// timezone, _ := time.Now().Zone()
+	query.Add("timezone", "CET")
+
 	req.URL.RawQuery = query.Encode()
 
 	res, err := t.client.Do(req)
@@ -135,7 +139,6 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time
 func (t *Tomorrow) unmarshalForecast(forecastBody []byte) (*Forecast, error) {
 	var tioForecast tomForecast
 
-	spew.Dump(forecastBody)
 	if err := json.Unmarshal(forecastBody, &tioForecast); err != nil {
 		return nil, errors.New("tomorrow.io: failed to unmarshal response body")
 	}
