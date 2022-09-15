@@ -5,6 +5,7 @@ import (
 
 	"github.com/lucavallin/mau/pkg/astro"
 	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/mau/pkg/ui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -36,7 +37,7 @@ var dayCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		ui.PrintDayInformation(&dayInformation)
+		ui.PrintDayInformation(dayInformation)
 
 	},
 }
