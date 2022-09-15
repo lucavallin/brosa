@@ -28,6 +28,20 @@ var initCmd = &cobra.Command{
 		}
 		viper.Set("ipgeolocation.api_key", ipGeolocationApiKey)
 
+		// Set the Astronomyapi.com Application Id
+		astronomyApiApplicationId, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Astronomyapi.com Application Id")
+		if err != nil {
+			pterm.Error.Println("error parsing Astronomyapi.com Application Id")
+		}
+		viper.Set("astronomyapi.application_id", astronomyApiApplicationId)
+
+		// Set the Astronomyapi.com Application Secret
+		astronomyApiApplicationSecret, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Astronomyapi.com Application Secret")
+		if err != nil {
+			pterm.Error.Println("error parsing Astronomyapi.com Application Secret")
+		}
+		viper.Set("astronomyapi.application_secret", astronomyApiApplicationSecret)
+
 		// Save the configuration to mau.yml
 		viper.WriteConfigAs(viper.ConfigFileUsed())
 		if err != nil {
