@@ -100,6 +100,7 @@ mau day 45.806691,12.206316
 ```
 
 ## TODOs
+- Implement visible command
 - Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Cache weather results for a set of coordinates for one hour
 - Add dashboard with all info that refreshes every hour and sends events to user
@@ -108,6 +109,5 @@ mau day 45.806691,12.206316
 - Add unit/integration tests
 - Architecture around features, not providers.
 - UI-specific code could be separated from the cmd package, but in this app it might be overkill.
-- The code used to make requests to the various providers tends to be quite repetitive. Would it be worth to handle the duplicated logic in a separate function?
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".

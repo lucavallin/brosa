@@ -6,6 +6,13 @@ import (
 	"github.com/lucavallin/mau/pkg/geo"
 )
 
+// ForecastRequest is a struct that represents an internal forecast request
+type ForecastRequest struct {
+	Location  *geo.Coordinates
+	StartTime time.Time
+	EndTime   time.Time
+}
+
 // Forecast represents the forecast for a location.
 type Forecast struct {
 	StartTime time.Time  `json:"startTime"`
@@ -24,7 +31,7 @@ type Interval struct {
 	PrecipitationProbability float64   `json:"precipitationProbability"`
 }
 
-// Provider is the interface for the weather provider.
-type Provider interface {
-	GetForecast(coordinates *geo.Coordinates, endTime string) (*Forecast, error)
+// Forecaster is the interface for the weather provider.
+type Forecaster interface {
+	GetForecast(*ForecastRequest) (*Forecast, error)
 }

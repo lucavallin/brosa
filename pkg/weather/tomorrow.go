@@ -7,8 +7,6 @@ import (
 	"io"
 	"net/http"
 	"time"
-
-	"github.com/lucavallin/mau/pkg/geo"
 )
 
 // Notice: for internal names, we use "tom" instead of "Tomorrow"
@@ -83,14 +81,14 @@ func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 // GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time, endTime time.Time, onlyBestForecast bool) (*Forecast, error) {
+func (t *Tomorrow) GetForecast(fr *ForecastRequest) (*Forecast, error) {
 	req, err := http.NewRequest("GET", tomBaseUrl+"/timelines", nil)
 	if err != nil {
 		return nil, errors.New("tomorrow.io: failed to create request")
 	}
 
 	query := req.URL.Query()
-	query.Add("location", fmt.Sprintf("%f,%f", coordinates.Latitude, coordinates.Longitude))
+	query.Add("location", fmt.Sprintf("%f,%f", fr.Location.Latitude, fr.Location.Longitude))
 	query.Add("fields", "temperature,humidity,visibility,cloudCover,dewPoint,precipitationProbability")
 
 	// onlyBestForecast is a flag that indicates whether to retrieve only the forecast with the best weather conditions for astronomy
@@ -100,12 +98,12 @@ func (t *Tomorrow) GetForecast(coordinates *geo.Coordinates, startTime time.Time
 	query.Add("timesteps", "1h")
 	// }
 
-	if startTime.After(endTime) {
+	if fr.StartTime.After(fr.EndTime) {
 		return nil, errors.New("tomorrow.io: startTime must be before endTime")
 	}
 
-	query.Add("startTime", startTime.Format(time.RFC3339))
-	query.Add("endTime", endTime.Format(time.RFC3339))
+	query.Add("startTime", fr.StartTime.Format(time.RFC3339))
+	query.Add("endTime", fr.EndTime.Format(time.RFC3339))
 
 	// Unfortunately, time.Now().Zone() returns "CEST" here, which is not a IANA timezone supported by tomorrow.io
 	// timezone, _ := time.Now().Zone()
