@@ -33,5 +33,10 @@ type Interval struct {
 
 // Forecaster is the interface for the weather provider.
 type Forecaster interface {
-	GetForecast(*ForecastRequest) (*Forecast, error)
+	Get(*ForecastRequest) (*Forecast, error)
+}
+
+// Forecast returns the forecast for the given request using the given forecaster
+func GetForecast(forecaster Forecaster, request *ForecastRequest) (*Forecast, error) {
+	return forecaster.Get(request)
 }

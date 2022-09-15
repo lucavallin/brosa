@@ -80,8 +80,8 @@ func (t *tomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return http.DefaultTransport.RoundTrip(req)
 }
 
-// GetForecast returns the forecast for the given coordinates and until the specified endTime
-func (t *Tomorrow) GetForecast(fr *ForecastRequest) (*Forecast, error) {
+// Get returns the forecast for the given coordinates and until the specified endTime
+func (t *Tomorrow) Get(fr *ForecastRequest) (*Forecast, error) {
 	req, err := http.NewRequest("GET", tomBaseUrl+"/timelines", nil)
 	if err != nil {
 		return nil, errors.New("tomorrow.io: failed to create request")
