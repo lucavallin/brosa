@@ -46,8 +46,8 @@ func (n *nomTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return http.DefaultTransport.RoundTrip(req)
 }
 
-// GetCoordinates returns a slice of Coordinates for the given location string
-func (n *Nominatim) GetCoordinates(location string) (*[]Coordinates, error) {
+// Get returns a list of possible Coordinates for the given location string
+func (n *Nominatim) Get(location string) (*[]Coordinates, error) {
 	req, err := http.NewRequest("GET", nomBaseUrl+"/search", nil)
 	if err != nil {
 		return nil, errors.New("nominatim.org: failed to create request")

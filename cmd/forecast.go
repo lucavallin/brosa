@@ -49,12 +49,13 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		tio := weather.NewTomorrowClient(tomorrowApiKey)
-		forecast, err := tio.GetForecast(&weather.ForecastRequest{
+		client := weather.NewTomorrowClient(tomorrowApiKey)
+		req := &weather.ForecastRequest{
 			Location:  coordinates,
 			StartTime: startTime,
 			EndTime:   endTime,
-		})
+		}
+		forecast, err := weather.GetForecast(client, req)
 
 		if err != nil {
 			pterm.Error.Println(err)

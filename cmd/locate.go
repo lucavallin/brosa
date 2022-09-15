@@ -16,9 +16,10 @@ var locateCmd = &cobra.Command{
 	Short: "Convert a location to coordinates",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		nominatim := geo.NewNominatim()
 		inputLocation := strings.Join(args, " ")
-		coordinates, err := nominatim.GetCoordinates(inputLocation)
+
+		client := geo.NewNominatim()
+		coordinates, err := geo.GetCoordinates(client, inputLocation)
 
 		if err != nil {
 			pterm.Error.Println(err)

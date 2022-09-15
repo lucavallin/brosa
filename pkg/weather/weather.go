@@ -37,6 +37,6 @@ type Forecaster interface {
 }
 
 // Forecast returns the forecast for the given request using the given forecaster
-func GetForecast(forecaster Forecaster, request *ForecastRequest) (*Forecast, error) {
-	return forecaster.Get(request)
+func GetForecast(f Forecaster, request *ForecastRequest) (*Forecast, error) {
+	return f.Get(request)
 }

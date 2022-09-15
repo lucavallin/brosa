@@ -108,7 +108,7 @@ mau day 45.806691,12.206316
 
 ## Refactoring
 - Add unit/integration tests
-- Introduce interfaces for providers
+- Decouple geo and astro providers like for weather
 
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".

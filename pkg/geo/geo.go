@@ -54,3 +54,13 @@ func validateCoordinates(latitude, longitude float64) error {
 
 	return nil
 }
+
+// Locator is an interface that represents a location service
+type Locator interface {
+	Get(location string) (*[]Coordinates, error)
+}
+
+// GetCoordinates returns a list of possible Coordinates for the given location string
+func GetCoordinates(l Locator, location string) (*[]Coordinates, error) {
+	return l.Get(location)
+}
