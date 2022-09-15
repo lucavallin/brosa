@@ -88,6 +88,7 @@ SUCCESS  ISS Found
 | Time             | Latitude | Longitude   | Altitude (km) | Velocity (km/h) | Visibility | Solar latitude | Solar longitude |
 | 2022-08-21 16:59 | 5.319085 | -178.143555 | 419           | 27576           | eclipsed   | 11.977992      | 315.955918      |
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
 
 - `mau day`: Get current information about the Sun and the Moon for a given location. Example:
 
@@ -108,7 +109,7 @@ mau day 45.806691,12.206316
 
 ## Refactoring
 - Add unit/integration tests
-- Decouple geo and astro providers like for weather
+- Decouple astro providers like for weather and geo
 
 ## Thoughts
 - The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".
