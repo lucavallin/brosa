@@ -4,11 +4,11 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"time"
 
 	"github.com/lucavallin/mau/pkg/astro"
+	"github.com/lucavallin/mau/pkg/ui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
@@ -29,22 +29,7 @@ var issCmd = &cobra.Command{
 
 		pterm.Success.Printf("ISS Found\n")
 
-		var table = pterm.TableData{
-			{"Time", "Latitude", "Longitude", "Altitude (km)", "Velocity (km/h)", "Visibility", "Solar latitude", "Solar longitude"},
-		}
-		time := time.Unix(issPosition.Timestamp, 0)
-		table = append(table, []string{
-			time.Format("2006-01-02 15:04"),
-			fmt.Sprintf("%f", issPosition.Latitude),
-			fmt.Sprintf("%f", issPosition.Longitude),
-			fmt.Sprintf("%2.f", issPosition.Altitude),
-			fmt.Sprintf("%2.f", issPosition.Velocity),
-			issPosition.Visibility,
-			fmt.Sprintf("%f", issPosition.SolarLatitude),
-			fmt.Sprintf("%f", issPosition.SolarLongitude),
-		})
-
-		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).Render()
+		ui.PrintIss(issPosition)
 	},
 }
 

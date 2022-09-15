@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"time"
 
 	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/mau/pkg/ui"
 	"github.com/lucavallin/mau/pkg/weather"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
@@ -61,22 +61,7 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		var table = pterm.TableData{
-			{"Date", "Cloud Cover (%)", "Humidity (%)", "Temperature (ºC)", "Visibility (km)", "Dew Point (ºC)", "Precipitation Probability (%)"},
-		}
-		for _, interval := range forecast.Intervals {
-			table = append(table, []string{
-				interval.StartTime.Format("2006-01-02 15:04"),
-				fmt.Sprintf("%2.f", interval.CloudCover),
-				fmt.Sprintf("%2.f", interval.Humidity),
-				fmt.Sprintf("%2.f", interval.Temperature),
-				fmt.Sprintf("%2.f", interval.Visibility),
-				fmt.Sprintf("%2.f", interval.DewPoint),
-				fmt.Sprintf("%2.f", interval.PrecipitationProbability),
-			})
-		}
-
-		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).WithRightAlignment().Render()
+		ui.PrintForecast(forecast)
 	},
 }
 

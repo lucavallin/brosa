@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
 	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/mau/pkg/ui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
@@ -26,19 +26,7 @@ var locateCmd = &cobra.Command{
 		}
 
 		pterm.Success.Printf("%d coordinate(s) found!\n", len(*coordinates))
-		var table = pterm.TableData{
-			{"Name", "Latitude", "Longitude", "Latitude, Longitude"},
-		}
-		for _, coordinate := range *coordinates {
-			table = append(table, []string{
-				coordinate.Name,
-				fmt.Sprintf("%f", coordinate.Latitude),
-				fmt.Sprintf("%f", coordinate.Longitude),
-				fmt.Sprintf("%f,%f", coordinate.Latitude, coordinate.Longitude),
-			})
-		}
-
-		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).Render()
+		ui.PrintCoordinates(coordinates)
 	},
 }
 

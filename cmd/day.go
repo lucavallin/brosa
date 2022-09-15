@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/lucavallin/mau/pkg/astro"
@@ -37,23 +36,7 @@ var dayCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		var table = pterm.TableData{
-			{"Sunrise", "Sunset", "Day length (h)", "Sun altitude (°)", "Sun azimuth (°)", "Moonrise", "Moonset", "Moon altitude (°)", "Moon azimuth (°)"},
-		}
-
-		table = append(table, []string{
-			dayInformation.Sunrise,
-			dayInformation.Sunset,
-			dayInformation.DayLength,
-			fmt.Sprintf("%2.f", dayInformation.SunAltitude),
-			fmt.Sprintf("%2.f", dayInformation.SunAzimuth),
-			dayInformation.Moonrise,
-			dayInformation.Moonset,
-			fmt.Sprintf("%2.f", dayInformation.MoonAltitude),
-			fmt.Sprintf("%2.f", dayInformation.MoonAzimuth),
-		})
-
-		pterm.DefaultTable.WithBoxed().WithHasHeader().WithData(table).WithRightAlignment().Render()
+		ui.PrintDayInformation(&dayInformation)
 
 	},
 }
