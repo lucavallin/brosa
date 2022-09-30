@@ -102,7 +102,7 @@ mau day 45.806691,12.206316
 ```
 
 ## TODOs
-- Implement visible command
+- Implement visible command (https://docs.astronomyapi.com)
 - Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Cache weather results for a set of coordinates for one hour
 - Add dashboard with all info that refreshes every hour and sends events to user
