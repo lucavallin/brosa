@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/geo"
 )
 
 // Notice: for internal names, we use "ipg" instead of "IPGeolocation"

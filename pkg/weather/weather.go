@@ -3,7 +3,7 @@ package weather
 import (
 	"time"
 
-	"github.com/lucavallin/mau/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/geo"
 )
 
 // ForecastRequest is a struct that represents an internal forecast request

@@ -4,8 +4,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/lucavallin/mau/pkg/geo"
-	"github.com/lucavallin/mau/pkg/ui"
+	"github.com/lucavallin/brosa/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/ui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )

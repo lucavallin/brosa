@@ -1,35 +1,35 @@
-# mau
-# mau
-Mighty Astronomical Utility. A CLI tool written in Golang to retrieve information useful for astronomy.
+# <img src="https://github.com/lucavallin/brosa/blob/main/docs/brosa.png" style="width:40px;padding-right:10px;margin-bottom:-8px;"> brosa
 
-## How to run
+A CLI tool written in Golang to retrieve information useful for astronomy.
 
-To build `mau`, run the following command:
+## Setup
+
+Build `brosa` with the following command:
 
 ```bash
 go build
 ```
 
-then run `mau init` to initialize the configuration file (i.e. API keys, etc):
+Then initializa configuration (e.g. API keys...) with `brosa init`:
 
 ```bash
-mau init
+brosa init
 
-INFO  initializing mau configuration
+INFO  initializing brosa configuration
 
 Enter your Tomorrow.io API key: XXXXXXXXXXXXXXXXXXXX
 
 Enter your IPGeolocation.com API key: XXXXXXXXXXXXXXXXXXXX
 
-SUCCESS  mau configuration initialized
+SUCCESS  brosa configuration initialized
 ```
 
-## Available commands
+## Usage
 
-- `mau forecast`: Get the weather forecast relevant for astronomy for a set or coordinates. Example:
+- `brosa forecast`: Get the weather forecast relevant for astronomy for a set or coordinates. Example:
 
 ```bash
-mau forecast 18.955324,69.649208
+brosa forecast 18.955324,69.649208
 
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 |             Date | Cloud Cover (%) | Humidity (%) | Temperature (ºC) | Visibility (km) |
@@ -61,10 +61,10 @@ mau forecast 18.955324,69.649208
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-- `mau locate`: Get the coordinates of a place. Example:
+- `brosa locate`: Get the coordinates of a place. Example:
 
 ```bash
-mau locate tromso
+brosa locate tromso
 
 SUCCESS  6 coordinate(s) found!
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -78,10 +78,10 @@ SUCCESS  6 coordinate(s) found!
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-- `mau iss`: Get the current position of the International Space Station. Example:
+- `brosa iss`: Get the current position of the International Space Station. Example:
 
 ```bash
-mau iss
+brosa iss
 
 SUCCESS  ISS Found
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -90,10 +90,10 @@ SUCCESS  ISS Found
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-- `mau day`: Get current information about the Sun and the Moon for a given location. Example:
+- `brosa day`: Get current information about the Sun and the Moon for a given location. Example:
 
 ```bash
-mau day 45.806691,12.206316
+brosa day 45.806691,12.206316
 
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 | Sunrise | Sunset | Day length (h) | Sun altitude (°) | Sun azimuth (°) | Moonrise | Moonset | Moon altitude (°) | Moon azimuth (°) |
@@ -101,15 +101,10 @@ mau day 45.806691,12.206316
 └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## TODOs
-- Implement visible command (https://docs.astronomyapi.com)
+## Improvements
+- Implement `visible` command (https://docs.astronomyapi.com)
 - Add support for "best" timestep (or devise algorithm to calculate best time for observing)
 - Cache weather results for a set of coordinates for one hour
-- Add dashboard with all info that refreshes every hour and sends events to user
-
-## Refactoring
+- Add dashboard with all info that refreshes every hour and sends events to the user
 - Add unit/integration tests
-- Decouple astro providers like for weather and geo
-
-## Thoughts
-- The `go-resty` package was a good choice for the HTTP client, it's easy to use and hides a lot of the boilerplate needed when making HTTP requests with Golang. We are now using the native `net/http` package instead for "purity".
+- Decouple `astro` providers like for `weather` and `geo`

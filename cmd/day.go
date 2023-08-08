@@ -3,9 +3,9 @@ package cmd
 import (
 	"os"
 
-	"github.com/lucavallin/mau/pkg/astro"
-	"github.com/lucavallin/mau/pkg/geo"
-	"github.com/lucavallin/mau/pkg/ui"
+	"github.com/lucavallin/brosa/pkg/astro"
+	"github.com/lucavallin/brosa/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/ui"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -25,7 +25,7 @@ var dayCmd = &cobra.Command{
 
 		ipGeolocationApiKey := viper.GetString("ipgeolocation.api_key")
 		if ipGeolocationApiKey == "" {
-			pterm.Error.Println("ipgeolocation.com API key not set. Please run 'mau init' to set it.")
+			pterm.Error.Println("ipgeolocation.com API key not set. Please run 'brosa init' to set it.")
 			os.Exit(1)
 		}
 

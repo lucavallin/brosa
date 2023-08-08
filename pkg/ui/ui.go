@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lucavallin/mau/pkg/astro"
-	"github.com/lucavallin/mau/pkg/geo"
-	"github.com/lucavallin/mau/pkg/weather"
+	"github.com/lucavallin/brosa/pkg/astro"
+	"github.com/lucavallin/brosa/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/weather"
 	"github.com/pterm/pterm"
 )
 

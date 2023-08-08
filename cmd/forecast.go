@@ -4,9 +4,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/lucavallin/mau/pkg/geo"
-	"github.com/lucavallin/mau/pkg/ui"
-	"github.com/lucavallin/mau/pkg/weather"
+	"github.com/lucavallin/brosa/pkg/geo"
+	"github.com/lucavallin/brosa/pkg/ui"
+	"github.com/lucavallin/brosa/pkg/weather"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -45,7 +45,7 @@ var forecastCmd = &cobra.Command{
 
 		tomorrowApiKey := viper.GetString("tomorrow.api_key")
 		if tomorrowApiKey == "" {
-			pterm.Error.Println("tomorrow.io API key not set. Please run 'mau init' to set it.")
+			pterm.Error.Println("tomorrow.io API key not set. Please run 'brosa init' to set it.")
 			os.Exit(1)
 		}
 

@@ -1,4 +1,4 @@
-module github.com/lucavallin/mau
+module github.com/lucavallin/brosa
 
 go 1.19
 

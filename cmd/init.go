@@ -9,10 +9,10 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize the mau CLI configuration",
+	Short: "Initialize the brosa CLI configuration",
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		pterm.Info.Println("initializing mau configuration")
+		pterm.Info.Println("initializing brosa configuration")
 
 		// Set the Tomorrow.io API key
 		tomorrowApiKey, err := pterm.DefaultInteractiveTextInput.WithMultiLine(false).Show("\nEnter your Tomorrow.io API key")
@@ -42,14 +42,14 @@ var initCmd = &cobra.Command{
 		}
 		viper.Set("astronomyapi.application_secret", astronomyApiApplicationSecret)
 
-		// Save the configuration to mau.yml
+		// Save the configuration to brosa.yml
 		viper.WriteConfigAs(viper.ConfigFileUsed())
 		if err != nil {
-			pterm.Error.Println("error writing mau configuration")
+			pterm.Error.Println("error writing brosa configuration")
 		}
 
 		pterm.Println("\n")
-		pterm.Success.Println("mau configuration initialized")
+		pterm.Success.Println("brosa configuration initialized")
 	},
 }
 
