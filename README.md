@@ -1,4 +1,4 @@
-# <img src="https://github.com/lucavallin/brosa/blob/main/docs/brosa.png" style="width:40px;padding-right:10px;margin-bottom:-8px;"> brosa
+# <img src="https://github.com/lucavallin/brosa/blob/main/docs/brosa.png" style="width:40px;padding-right:10px;margin-bottom:-8px;"> brósa
 
 A CLI tool written in Golang to retrieve information useful for astronomy.
 
