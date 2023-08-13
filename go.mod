@@ -2,6 +2,10 @@ module github.com/lucavallin/brosa
 
 go 1.19
 
+retract (
+     v0.0.1-alpha
+)
+
 require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/pterm/pterm v0.12.45
