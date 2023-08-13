@@ -48,8 +48,7 @@ var initCmd = &cobra.Command{
 			pterm.Error.Println("error writing brosa configuration")
 		}
 
-		pterm.Println("\n")
-		pterm.Success.Println("brosa configuration initialized")
+		pterm.Success.Println("\nbrosa configuration initialized")
 	},
 }
 
