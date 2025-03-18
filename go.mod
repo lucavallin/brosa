@@ -1,6 +1,7 @@
 module github.com/lucavallin/brosa
 
-go 1.19
+go 1.21.0
+
 toolchain go1.24.1
 
 retract v0.0.1-alpha
